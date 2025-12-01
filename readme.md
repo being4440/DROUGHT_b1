@@ -77,6 +77,7 @@ We compute:
 annual = historical['weighted_annual']
 p = (annual < W_user).mean()
 dryness_percentile =  p*100
+```
 
 ## How to run
 
@@ -84,7 +85,7 @@ dryness_percentile =  p*100
 2. Install dependencies:
 
    ```bash
-   pip install -r requirements.txt
+   pip install -r requirements.txt ```
    
 Ensure Rainfall_Data_LL.csv is placed at the path expected by test.py
 or update csv_path in the code.
