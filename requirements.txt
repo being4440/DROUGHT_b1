@@ -1,0 +1,5 @@
+# Minimal runtime requirements for DROUGHT_b1
+# Pandas is required for CSV reading and dataframe operations.
+# NumPy is a dependency used by pandas and may be directly useful.
+pandas>=1.5
+numpy>=1.24
