@@ -1,5 +1,8 @@
 # Data-driven Drought Classification for Indian Subdivisions
 
+This project builds a weighted rainfall index to estimate drought severity
+for Indian Meteorological Department (IMD) subdivisions using historical rainfall data.
+
 A small Python tool that uses historical rainfall data to classify drought severity
 (Extreme / Moderate / Mild / No Drought) for IMD subdivisions using a weighted
 annual rainfall index.
