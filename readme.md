@@ -23,15 +23,12 @@ The code currently:
 
 For each region, we compute the mean rainfall for each month across all years:
 
-\[
-\mu_m = \text{mean rainfall in month } m
-\]
+W = Σ(weight × rainfall)
 
 Then we define the monthly weight:
 
-\[
-w_m = \frac{\mu_m}{\sum_{k \in \text{months}} \mu_k}
-\]
+wₘ = μₘ / Σ(μₖ for all months k)
+weight(month) = mean_rainfall_of_month ÷ total_mean_rainfall_of_all_months
 
 So months with typically higher rainfall get higher weight.
 
@@ -40,37 +37,42 @@ So months with typically higher rainfall get higher weight.
 For a given year (or user-provided scenario), with monthly rainfall \( R_m \),
 we compute the weighted annual index:
 
-\[
-W = \sum_{m \in \text{months}} w_m \cdot R_m
-\]
+W = Σ(wₘ × Rₘ)
+
+Where:
+
+- wₘ = monthly weight
+- Rₘ = rainfall in month m
 
 If some user months are missing, we fill them with the historical mean of that month
-for the region before computing \( W \).
+for the region before computing .
 
 ### 3. Drought thresholds from historical distribution
 
 For the chosen region, we compute the weighted annual index \( W \) for each
 historical year, and then estimate quantile-based thresholds:
 
-- Extreme drought threshold: \( T_\text{extreme} = Q_{0.20}(W) \)
-- Moderate drought threshold: \( T_\text{moderate} = Q_{0.40}(W) \)
-- Mild drought threshold: \( T_\text{mild} = Q_{0.60}(W) \)
+T_extreme  = 20th percentile of historical weighted index  
+T_moderate = 40th percentile of historical weighted index  
+T_mild     = 60th percentile of historical weighted index
 
-where \( Q_p \) denotes the empirical \( p \)-th quantile.
+
 
 ### 4. Drought classification rule
 
 For a user year with index \( W_\text{user} \):
 
-- If \( W_\text{user} < T_\text{extreme} \) → **Extreme Drought**
-- Else if \( W_\text{user} < T_\text{moderate} \) → **Moderate Drought**
-- Else if \( W_\text{user} < T_\text{mild} \) → **Mild Drought**
-- Else → **No Drought**
+If W_user < T_extreme  → Extreme Drought  
+Else if W_user < T_moderate → Moderate Drought  
+Else if W_user < T_mild → Mild Drought  
+Else → No Drought
+
 
 ### 5. Percentile / probability metric
 
-Let \( W_1, W_2, \dots, W_N \) be the historical weighted annual values.
+p = count(historical_W < W_user) ÷ total_historical_years
 
+dryness_percentile = p × 100
 We compute:
 
 ```python
